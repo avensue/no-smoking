@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>🚭 無菸校園：法規糾察隊｜衛生股長宣導</title>
+  <!-- 載入 Google Fonts 繁體中文圓潤黑體，確保手機與投影大螢幕皆清晰易讀 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       全域設計變數與重置樣式
+    ========================================================= */
+    :root {
+      --card-bg: #FFFFFF;
+      --primary-teal: #00897B;
+      --bright-amber: #FFB300;
+      --coral-red: #F4511E;
+      --sky-blue: #039BE5;
+      --text-dark: #1E293B;
+      --text-muted: #475569;
+      --error-red: #EF4444;
+      --success-green: #16A34A;
+      --shadow-soft: 0 14px 34px rgba(15, 23, 42, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #E0F2FE 0%, #FEF9C3 50%, #DCFCE7 100%);
+      color: var(--text-dark);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 3vw, 26px);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 背景活潑幾何圓裝飾 */
+    .bg-decor {
+      position: fixed;
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .bg-decor-1 {
+      width: 280px;
+      height: 280px;
+      background: #FDE047;
+      top: -70px;
+      left: -70px;
+    }
+    .bg-decor-2 {
+      width: 340px;
+      height: 340px;
+      background: #7DD3FC;
+      bottom: -90px;
+      right: -90px;
+    }
+
+    /* =========================================================
+       主容器卡片
+    ========================================================= */
+    .app-container {
+      width: 100%;
+      max-width: 880px;
+      background: var(--card-bg);
+      border-radius: 32px;
+      border: 5px solid #FFFFFF;
+      box-shadow: var(--shadow-soft), 0 0 0 5px rgba(14, 165, 233, 0.22);
+      padding: clamp(18px, 3.8vw, 36px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 頂部控制列（徽章 + 音效開關） */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: clamp(14px, 2.5vw, 22px);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #0284C7, #0EA5E9);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: clamp(0.95rem, 2.4vw, 1.25rem);
+      padding: 8px 18px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .sound-btn {
+      background: #F1F5F9;
+      border: 2px solid #CBD5E1;
+      color: var(--text-dark);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .sound-btn:hover {
+      background: #E2E8F0;
+    }
+    .sound-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* =========================================================
+       畫面切換控制
+    ========================================================= */
+    .screen {
+      display: none;
+      animation: fadeInScale 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* =========================================================
+       畫面 1：問答互動畫面
+    ========================================================= */
+    .question-box {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 3px dashed #F59E0B;
+      border-radius: 24px;
+      padding: clamp(18px, 3.2vw, 28px);
+      text-align: center;
+      margin-bottom: clamp(14px, 2.5vw, 20px);
+    }
+
+    .question-tag {
+      display: inline-block;
+      background: #EA580C;
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+      padding: 5px 16px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .question-title {
+      font-size: clamp(1.4rem, 3.9vw, 2.15rem);
+      font-weight: 900;
+      line-height: 1.4;
+      color: #0F172A;
+    }
+
+    .question-sub {
+      margin-top: 8px;
+      font-size: clamp(1.15rem, 3vw, 1.55rem);
+      font-weight: 900;
+      color: #B45309;
+    }
+
+    .question-highlight {
+      color: #DC2626;
+      text-decoration: underline;
+      text-decoration-color: #F59E0B;
+      text-decoration-thickness: 5px;
+      text-underline-offset: 6px;
+    }
+
+    /* 答錯哭哭表情與提示氣泡區 */
+    .feedback-wrapper {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .cry-feedback-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #FEF2F2;
+      border: 3px solid var(--error-red);
+      color: #B91C1C;
+      font-weight: 900;
+      font-size: clamp(1.1rem, 2.8vw, 1.45rem);
+      padding: 10px 22px;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.22);
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cry-feedback-box.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 可愛哭哭表情動畫 */
+    .cry-emoji {
+      font-size: clamp(2.1rem, 5vw, 2.8rem);
+      line-height: 1;
+      display: inline-block;
+      animation: cryWobble 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes cryWobble {
+      0% { transform: rotate(-10deg) translateY(0); }
+      100% { transform: rotate(10deg) translateY(3px); }
+    }
+
+    /* 4 個大選項按鈕（因法規文字較長，採用清晰寬版卡片設計，手機與電腦都超大好按） */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(12px, 2.2vw, 16px);
+    }
+
+    .option-btn {
+      width: 100%;
+      background: #FFFFFF;
+      border: 4px solid #CBD5E1;
+      border-radius: 22px;
+      padding: clamp(14px, 2.6vw, 20px) clamp(16px, 3vw, 24px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 2.5vw, 18px);
+      text-align: left;
+      box-shadow: 0 7px 0 #94A3B8;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease, background-color 0.2s ease;
+      user-select: none;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-2px);
+      border-color: #0284C7;
+      box-shadow: 0 9px 0 #38BDF8;
+      background-color: #F0F9FF;
+    }
+
+    .option-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 #64748B;
+    }
+
+    .option-badge {
+      flex-shrink: 0;
+      width: clamp(40px, 6.5vw, 50px);
+      height: clamp(40px, 6.5vw, 50px);
+      border-radius: 16px;
+      background: linear-gradient(135deg, #38BDF8, #0284C7);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: clamp(1.25rem, 3vw, 1.55rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
+    }
+
+    .option-text {
+      font-size: clamp(1.12rem, 2.8vw, 1.42rem);
+      font-weight: 800;
+      line-height: 1.45;
+      color: var(--text-dark);
+    }
+
+    /* 答錯時按鈕變紅並左右晃動 */
+    .option-btn.wrong {
+      border-color: var(--error-red) !important;
+      background-color: #FEF2F2 !important;
+      box-shadow: 0 7px 0 #FCA5A5 !important;
+      animation: shakeHorizontal 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    .option-btn.wrong .option-badge {
+      background: linear-gradient(135deg, #F87171, #DC2626);
+    }
+
+    @keyframes shakeHorizontal {
+      0%, 100% { transform: translateX(0); }
+      15% { transform: translateX(-12px); }
+      30% { transform: translateX(11px); }
+      45% { transform: translateX(-9px); }
+      60% { transform: translateX(8px); }
+      75% { transform: translateX(-5px); }
+    }
+
+    /* 答對時按鈕變綠放大 */
+    .option-btn.correct {
+      border-color: #16A34A !important;
+      background-color: #DCFCE7 !important;
+      box-shadow: 0 7px 0 #86EFAC !important;
+      animation: popCelebrate 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .option-btn.correct .option-badge {
+      background: linear-gradient(135deg, #4ADE80, #16A34A);
+    }
+
+    @keyframes popCelebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1.01); }
+    }
+
+    /* =========================================================
+       畫面 2：放煙火慶祝過場動畫舞台（HTML5 Canvas）
+    ========================================================= */
+    .fireworks-stage {
+      position: relative;
+      width: 100%;
+      height: clamp(340px, 56vh, 460px);
+      background: radial-gradient(circle at 50% 35%, #1E293B 0%, #0F172A 65%, #020617 100%);
+      border-radius: 26px;
+      border: 4px solid #FBBF24;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #fireworksCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+    }
+
+    .fireworks-banner {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      pointer-events: none;
+      padding: 16px 28px;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(4px);
+      border: 3px solid rgba(253, 224, 71, 0.7);
+      border-radius: 28px;
+      animation: bannerPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes bannerPopIn {
+      0% { transform: scale(0.4); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .fireworks-title {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 900;
+      color: #FDE047;
+      text-shadow: 0 4px 16px rgba(250, 204, 21, 0.7);
+      letter-spacing: 2px;
+    }
+
+    .fireworks-subtitle {
+      margin-top: 8px;
+      font-size: clamp(1.15rem, 3.2vw, 1.6rem);
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .skip-btn {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 5;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #FBBF24;
+      color: #0F172A;
+      font-family: inherit;
+      font-weight: 900;
+      font-size: 0.95rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       畫面 3：宣導重點揭曉畫面
+    ========================================================= */
+    .result-header {
+      text-align: center;
+      margin-bottom: clamp(16px, 2.8vw, 22px);
+    }
+
+    .congrats-pill {
+      display: inline-block;
+      background: linear-gradient(135deg, #22C55E, #15803D);
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 3.2vw, 1.65rem);
+      font-weight: 900;
+      padding: 7px 24px;
+      border-radius: 999px;
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+      margin-bottom: 12px;
+    }
+
+    .announcement-banner {
+      background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+      color: #FFFFFF;
+      border-radius: 24px;
+      padding: clamp(16px, 3vw, 24px);
+      box-shadow: 0 10px 24px rgba(3, 105, 161, 0.25);
+      border: 4px solid #BAE6FD;
+    }
+
+    .announcement-title {
+      font-size: clamp(1.35rem, 3.8vw, 2rem);
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: 0.5px;
+    }
+
+    /* 4 大宣導重點卡片列表 */
+    .points-list {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(12px, 2.2vw, 16px);
+      margin: clamp(16px, 2.8vw, 24px) 0;
+    }
+
+    .point-card {
+      background: #F8FAFC;
+      border: 3px solid #E2E8F0;
+      border-left: 10px solid #0284C7;
+      border-radius: 20px;
+      padding: clamp(14px, 2.6vw, 18px) clamp(14px, 2.8vw, 22px);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    .point-card:nth-child(1) {
+      border-left-color: #F59E0B;
+      background: #FFFBEB;
+    }
+    .point-card:nth-child(2) {
+      border-left-color: #EF4444;
+      background: #FEF2F2;
+    }
+    .point-card:nth-child(3) {
+      border-left-color: #8B5CF6;
+      background: #F5F3FF;
+    }
+    .point-card:nth-child(4) {
+      border-left-color: #10B981;
+      background: #ECFDF5;
+    }
+
+    .point-num {
+      flex-shrink: 0;
+      width: clamp(34px, 5.5vw, 42px);
+      height: clamp(34px, 5.5vw, 42px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+      color: #FFFFFF;
+      margin-top: 2px;
+    }
+
+    .point-card:nth-child(1) .point-num { background: #F59E0B; }
+    .point-card:nth-child(2) .point-num { background: #EF4444; }
+    .point-card:nth-child(3) .point-num { background: #8B5CF6; }
+    .point-card:nth-child(4) .point-num { background: #10B981; }
+
+    .point-content {
+      font-size: clamp(1.08rem, 2.7vw, 1.35rem);
+      line-height: 1.55;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .point-content strong {
+      font-weight: 900;
+      color: #B91C1C;
+    }
+
+    /* 重新宣導大按鈕 */
+    .replay-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 22px;
+      padding: clamp(15px, 2.8vw, 20px);
+      font-family: inherit;
+      font-size: clamp(1.25rem, 3.3vw, 1.65rem);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 7px 0 #92400E;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .replay-btn:hover {
+      filter: brightness(1.06);
+      transform: translateY(-2px);
+      box-shadow: 0 9px 0 #92400E;
+    }
+
+    .replay-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 #92400E;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 背景幾何圓裝飾 -->
+  <div class="bg-decor bg-decor-1"></div>
+  <div class="bg-decor bg-decor-2"></div>
+
+  <main class="app-container">
+    <!-- 頂部狀態列 -->
+    <header class="top-bar">
+      <div class="badge">
+        <span>🚭 無菸校園：法規糾察隊</span>
+      </div>
+      <button type="button" id="soundToggleBtn" class="sound-btn" aria-label="切換音效">
+        <span id="soundIcon">🔊</span>
+        <span id="soundText">音效開</span>
+      </button>
+    </header>
+
+    <!-- =========================================================
+         畫面 1：問答互動畫面
+    ========================================================= -->
+    <section id="quizScreen" class="screen active" aria-labelledby="mainQuestion">
+      <div class="question-box">
+        <span class="question-tag">📢 《學校菸害防制法》校園宣導</span>
+        <h1 id="mainQuestion" class="question-title">
+          無菸校園：法規糾察隊
+        </h1>
+        <p class="question-sub">
+          下列哪一項敘述<span class="question-highlight">完全正確</span>？請揪出正確法規！
+        </p>
+      </div>
+
+      <!-- 答錯哭哭表情與提示氣泡區 -->
+      <div class="feedback-wrapper">
+        <div id="cryFeedbackBox" class="cry-feedback-box" role="status" aria-live="polite">
+          <span class="cry-emoji" aria-hidden="true">😭</span>
+          <span id="cryFeedbackText">嗚嗚～這條寫錯囉，再想想看！</span>
+        </div>
+      </div>
+
+      <!-- 4 個大選項按鈕 -->
+      <div class="options-list">
+        <!-- 選項 1（錯誤：合法年齡應為 20 歲，非 18 歲） -->
+        <button type="button" class="option-btn" data-correct="false" data-hint="再想想看！合法年齡不是 18 歲喔～">
+          <span class="option-badge">1</span>
+          <span class="option-text">現行《菸害防制法》已將合法吸菸年齡提高至 18 歲</span>
+        </button>
+
+        <!-- 選項 2（錯誤：台灣已全面禁止電子煙） -->
+        <button type="button" class="option-btn" data-correct="false" data-hint="再想想看！電子煙在台灣是全面禁止的喔～">
+          <span class="option-badge">2</span>
+          <span class="option-text">台灣未全面禁止電子煙</span>
+        </button>
+
+        <!-- 選項 3（錯誤：供應給未滿 20 歲，非 18 歲） -->
+        <button type="button" class="option-btn" data-correct="false" data-hint="再想想看！年齡門檻已經提高囉～">
+          <span class="option-badge">3</span>
+          <span class="option-text">任何人不得供應菸品（含免費贈送、代購、分抽）給未滿 18 歲之人，最高可罰 25 萬元</span>
+        </button>
+
+        <!-- 選項 4（正確答案） -->
+        <button type="button" class="option-btn" data-correct="true">
+          <span class="option-badge">4</span>
+          <span class="option-text">依《菸害防制法》第 18 條，各級學校（含高中職、大專校院）無論室內外、平日或假日，皆為「全面禁止吸菸」場所</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         畫面 2：放煙火慶祝過場動畫舞台（Canvas 煙火）
+    ========================================================= -->
+    <section id="fireworksScreen" class="screen" aria-label="答對煙火慶祝動畫">
+      <div class="fireworks-stage">
+        <canvas id="fireworksCanvas"></canvas>
+
+        <div class="fireworks-banner">
+          <div class="fireworks-title">🎆 答對了！太厲害啦！ 🎉</div>
+          <div class="fireworks-subtitle">無菸校園法規糾察隊認證通過！</div>
+        </div>
+
+        <button type="button" id="skipAnimBtn" class="skip-btn">查看宣導重點 ⏭</button>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         畫面 3：宣導重點揭曉畫面
+    ========================================================= -->
+    <section id="resultScreen" class="screen" aria-labelledby="announcementHeading">
+      <div class="result-header">
+        <div class="congrats-pill">🎉 恭喜答對！完整法規重點</div>
+        <div class="announcement-banner">
+          <h2 id="announcementHeading" class="announcement-title">
+            📢 《學校菸害防制法》校園宣導重點
+          </h2>
+        </div>
+      </div>
+
+      <!-- 4 大法規宣導重點 -->
+      <div class="points-list">
+        <div class="point-card">
+          <div class="point-num">1</div>
+          <div class="point-content">
+            現行《菸害防制法》已將合法吸菸年齡提高至 <strong>20 歲</strong>。未滿 20 歲吸菸者，除了會被通知限期接受戒菸教育（未成年須家長陪同），無正當理由未到場還會處 <strong>2,000 元至 1 萬元罰鍰</strong>。此外，多數縣市也已將「高中職周邊通學步道、校門口」公告為全面禁菸區。
+          </div>
+        </div>
+
+        <div class="point-card">
+          <div class="point-num">2</div>
+          <div class="point-content">
+            台灣已<strong>全面禁止電子煙</strong>（包含製造、輸入、販賣、供應、展示、廣告及「使用」）。只要使用電子煙就是違法，且近年校園查獲的電子煙油常非法摻雜<strong>「依托咪酯（喪屍煙彈）」</strong>等毒品，風險極高。
+          </div>
+        </div>
+
+        <div class="point-card">
+          <div class="point-num">3</div>
+          <div class="point-content">
+            任何人不得供應菸品（含免費贈送、代購、分抽）給<strong>未滿 20 歲</strong>之人，<strong>最高可罰 25 萬元</strong>，千萬不要為了「講義氣」跟自己的錢包過不去。
+          </div>
+        </div>
+
+        <div class="point-card">
+          <div class="point-num">4</div>
+          <div class="point-content">
+            依《菸害防制法》第 18 條，各級學校（含高中職、大專校院）無論室內外、平日或假日，皆為<strong>「全面禁止吸菸」場所</strong>，連吸菸區也不能設。違規吸菸者處 <strong>2,000 元至 1 萬元罰鍰</strong>。
+          </div>
+        </div>
+      </div>
+
+      <button type="button" id="replayBtn" class="replay-btn">
+        <span>🔄 再玩一次 / 重新宣導</span>
+      </button>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * =========================================================
+     * Web Audio API 合成音效模組（無需外部音檔，支援靜音切換）
+     * =========================================================
+     */
+    class SoundEffects {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            this.ctx = new AudioCtx();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      toggleMute() {
+        this.muted = !this.muted;
+        return this.muted;
+      }
+
+      playClick() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(560, now);
+        osc.frequency.exponentialRampToValueAtTime(840, now + 0.06);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      }
+
+      // 答錯哭哭滑落音效（嗚～哇～）
+      playCryWrong() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(340, now);
+        osc.frequency.linearRampToValueAtTime(220, now + 0.22);
+        osc.frequency.linearRampToValueAtTime(175, now + 0.42);
+
+        gain.gain.setValueAtTime(0.24, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.44);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.45);
+      }
+
+      // 煙火綻放慶祝音效（歡呼和弦 + 煙火砰砰聲）
+      playFireworkBurst() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+
+        // 歡呼和弦
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.06);
+
+          gain.gain.setValueAtTime(0.2, now + i * 0.06);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.3);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.06);
+          osc.stop(now + i * 0.06 + 0.32);
+        });
+
+        // 煙火爆炸低頻悶響
+        [0.15, 0.55, 0.95, 1.35].forEach(offset => {
+          const bufferSize = this.ctx.sampleRate * 0.28;
+          const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.08));
+          }
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(650, now + offset);
+
+          const gain = this.ctx.createGain();
+          gain.gain.setValueAtTime(0.32, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.28);
+
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+          noise.start(now + offset);
+        });
+      }
+    }
+
+    /**
+     * =========================================================
+     * HTML5 Canvas 煙火粒子動畫系統
+     * =========================================================
+     */
+    class FireworksEngine {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.running = false;
+        this.rafId = null;
+        this.spawnTimer = null;
+        this.colors = ['#FDE047', '#38BDF8', '#FB7185', '#4ADE80', '#C084FC', '#FB923C', '#FFFFFF'];
+      }
+
+      resize() {
+        const rect = this.canvas.parentElement.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+      }
+
+      createBurst(x, y) {
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        const count = 48;
+        for (let i = 0; i < count; i++) {
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.15;
+          const speed = 2 + Math.random() * 4.8;
+          this.particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            decay: 0.014 + Math.random() * 0.012,
+            size: 2.5 + Math.random() * 2.5,
+            color
+          });
+        }
+      }
+
+      start() {
+        this.resize();
+        this.particles = [];
+        this.running = true;
+
+        // 立即施放第一波煙火
+        this.createBurst(this.canvas.width * 0.3, this.canvas.height * 0.35);
+        this.createBurst(this.canvas.width * 0.7, this.canvas.height * 0.32);
+
+        // 定時施放多發煙火
+        this.spawnTimer = setInterval(() => {
+          if (!this.running) return;
+          const rx = this.canvas.width * (0.18 + Math.random() * 0.64);
+          const ry = this.canvas.height * (0.18 + Math.random() * 0.45);
+          this.createBurst(rx, ry);
+        }, 420);
+
+        const loop = () => {
+          if (!this.running) return;
+          this.updateAndDraw();
+          this.rafId = requestAnimationFrame(loop);
+        };
+        loop();
+      }
+
+      updateAndDraw() {
+        // 半透明深藍夜空覆蓋產生煙火拖尾光軌
+        this.ctx.fillStyle = 'rgba(15, 23, 42, 0.24)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.06; // 微重力下墜
+          p.vx *= 0.98;
+          p.vy *= 0.98;
+          p.alpha -= p.decay;
+
+          if (p.alpha <= 0) {
+            this.particles.splice(i, 1);
+            continue;
+          }
+
+          this.ctx.save();
+          this.ctx.globalAlpha = p.alpha;
+          this.ctx.fillStyle = p.color;
+          this.ctx.beginPath();
+          this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.restore();
+        }
+      }
+
+      stop() {
+        this.running = false;
+        clearInterval(this.spawnTimer);
+        if (this.rafId) {
+          cancelAnimationFrame(this.rafId);
+        }
+      }
+    }
+
+    /**
+     * =========================================================
+     * 互動流程與畫面狀態管理
+     * =========================================================
+     */
+    const sfx = new SoundEffects();
+    const fireworksCanvas = document.getElementById('fireworksCanvas');
+    const fireworksEngine = new FireworksEngine(fireworksCanvas);
+
+    const quizScreen = document.getElementById('quizScreen');
+    const fireworksScreen = document.getElementById('fireworksScreen');
+    const resultScreen = document.getElementById('resultScreen');
+
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const soundIcon = document.getElementById('soundIcon');
+    const soundText = document.getElementById('soundText');
+
+    const optionBtns = document.querySelectorAll('.option-btn');
+    const cryFeedbackBox = document.getElementById('cryFeedbackBox');
+    const cryFeedbackText = document.getElementById('cryFeedbackText');
+    const skipAnimBtn = document.getElementById('skipAnimBtn');
+    const replayBtn = document.getElementById('replayBtn');
+
+    let feedbackTimer = null;
+    let transitionTimer = null;
+    let isLocked = false;
+
+    window.addEventListener('resize', () => {
+      if (fireworksScreen.classList.contains('active')) {
+        fireworksEngine.resize();
+      }
+    });
+
+    function showScreen(targetScreen) {
+      [quizScreen, fireworksScreen, resultScreen].forEach(sec => {
+        sec.classList.remove('active');
+      });
+      targetScreen.classList.add('active');
+    }
+
+    // 音效開關按鈕
+    soundToggleBtn.addEventListener('click', () => {
+      const muted = sfx.toggleMute();
+      soundIcon.textContent = muted ? '🔇' : '🔊';
+      soundText.textContent = muted ? '靜音中' : '音效開';
+      if (!muted) sfx.playClick();
+    });
+
+    // 顯示哭哭表情與「再想想看！」提示
+    function showCryFeedback(hintText) {
+      cryFeedbackText.textContent = hintText || '再想想看！';
+      cryFeedbackBox.classList.remove('show');
+      void cryFeedbackBox.offsetWidth;
+      cryFeedbackBox.classList.add('show');
+
+      clearTimeout(feedbackTimer);
+      feedbackTimer = setTimeout(() => {
+        cryFeedbackBox.classList.remove('show');
+      }, 2800);
+    }
+
+    // 開始放煙火過場動畫
+    function startFireworksSequence() {
+      showScreen(fireworksScreen);
+      fireworksEngine.start();
+      sfx.playFireworkBurst();
+
+      // 2.4 秒後自動顯示完整宣導重點
+      transitionTimer = setTimeout(() => {
+        goToResultScreen();
+      }, 2400);
+    }
+
+    // 進入宣導重點卡片畫面
+    function goToResultScreen() {
+      clearTimeout(transitionTimer);
+      fireworksEngine.stop();
+      showScreen(resultScreen);
+      isLocked = false;
+    }
+
+    // 綁定 4 個選項按鈕事件
+    optionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (isLocked) return;
+
+        const isCorrect = btn.dataset.correct === 'true';
+
+        if (!isCorrect) {
+          // 答錯：播放哭哭滑落音效、按鈕左右晃動、顯示哭哭表情與「再想想看！」
+          sfx.playCryWrong();
+          btn.classList.remove('wrong');
+          void btn.offsetWidth;
+          btn.classList.add('wrong');
+          showCryFeedback(btn.dataset.hint);
+        } else {
+          // 答對：按鈕變綠放大，接著進入煙火慶祝畫面
+          isLocked = true;
+          cryFeedbackBox.classList.remove('show');
+          btn.classList.add('correct');
+          sfx.playClick();
+
+          setTimeout(() => {
+            startFireworksSequence();
+          }, 380);
+        }
+      });
+    });
+
+    // 跳過煙火按鈕
+    skipAnimBtn.addEventListener('click', () => {
+      sfx.playClick();
+      goToResultScreen();
+    });
+
+    // 再玩一次 / 重新宣導按鈕
+    replayBtn.addEventListener('click', () => {
+      sfx.playClick();
+      isLocked = false;
+      clearTimeout(feedbackTimer);
+      clearTimeout(transitionTimer);
+      fireworksEngine.stop();
+
+      cryFeedbackBox.classList.remove('show');
+      optionBtns.forEach(btn => {
+        btn.classList.remove('wrong', 'correct');
+      });
+
+      showScreen(quizScreen);
+    });
+  </script>
+</body>
+</html>
